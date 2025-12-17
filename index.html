@@ -4,38 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoEHT Control Panel</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            color: #333;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; }
         .card {
             background: white;
             border-radius: 12px;
             padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
-
-        h1 {
-            color: #333;
-            margin-bottom: 24px;
-            text-align: center;
-        }
+        h1 { text-align: center; margin-bottom: 24px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        h2 { margin-bottom: 16px; color: #333; }
 
         .status-bar {
             display: flex;
@@ -46,91 +34,45 @@
             border-radius: 8px;
             margin-bottom: 20px;
         }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-
+        .status-indicator { display: flex; align-items: center; gap: 10px; font-weight: 600; }
         .status-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+            width: 12px; height: 12px; border-radius: 50%;
             animation: pulse 2s infinite;
         }
-
-        .status-dot.running {
-            background: #10b981;
-        }
-
-        .status-dot.stopped {
-            background: #ef4444;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+        .status-dot.running { background: #10b981; }
+        .status-dot.stopped { background: #ef4444; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         .control-panel {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 12px;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
-
         button {
             padding: 12px 24px;
             border: none;
             border-radius: 8px;
-            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
         }
-
-        .btn-stop {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-stop:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-        }
-
-        .btn-start {
-            background: #10b981;
-            color: white;
-        }
-
-        .btn-start:hover {
-            background: #059669;
-            transform: translateY(-2px);
-        }
-
-        .btn-refresh {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn-refresh:hover {
-            background: #2563eb;
-        }
+        .btn-start { background: #10b981; color: white; }
+        .btn-start:hover { background: #059669; transform: translateY(-2px); }
+        .btn-stop { background: #ef4444; color: white; }
+        .btn-stop:hover { background: #dc2626; transform: translateY(-2px); }
+        .btn-refresh { background: #3b82f6; color: white; }
+        .btn-refresh:hover { background: #2563eb; }
 
         .input-group {
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
-
         label {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: #555;
         }
-
         input, select {
             width: 100%;
             padding: 10px;
@@ -138,17 +80,16 @@
             border-radius: 6px;
             font-size: 14px;
         }
+        input:focus, select:focus { outline: none; border-color: #667eea; }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
         }
 
-        .file-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
+        .file-list { max-height: 400px; overflow-y: auto; border: 1px solid #e5e7eb; border-radius: 8px; }
         .file-item {
             display: flex;
             justify-content: space-between;
@@ -157,40 +98,14 @@
             border-bottom: 1px solid #e5e7eb;
             transition: background 0.2s;
         }
-
-        .file-item:hover {
-            background: #f9fafb;
-        }
-
-        .file-name {
-            font-weight: 500;
-            color: #333;
-        }
-
-        .file-size {
-            color: #6b7280;
-            font-size: 12px;
-        }
-
-        .file-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 12px;
-        }
-
-        .btn-view {
-            background: #8b5cf6;
-            color: white;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: white;
-        }
+        .file-item:hover { background: #f9fafb; }
+        .file-item:last-child { border-bottom: none; }
+        .file-info .file-name { font-weight: 500; }
+        .file-meta { color: #6b7280; font-size: 12px; margin-top: 4px; }
+        .file-actions { display: flex; gap: 8px; }
+        .btn-small { padding: 6px 12px; font-size: 12px; border: none; border-radius: 6px; color: white; cursor: pointer; }
+        .btn-view { background: #8b5cf6; }
+        .btn-delete { background: #ef4444; }
 
         .log-viewer {
             background: #1f2937;
@@ -199,7 +114,7 @@
             border-radius: 8px;
             font-family: 'Courier New', monospace;
             font-size: 13px;
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -209,62 +124,50 @@
             padding: 12px;
             border-radius: 6px;
             margin-bottom: 16px;
+            font-weight: 500;
         }
-
-        .alert-success {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .alert-error {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+        .alert-success { background: #d1fae5; color: #065f46; }
+        .alert-error { background: #fee2e2; color: #991b1b; }
 
         .loading {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 16px; height: 16px;
             border: 2px solid #f3f3f3;
             border-top: 2px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎮 AutoEHT Control Panel</h1>
 
-        <!-- Status Bar -->
+        <!-- Status -->
         <div class="card">
             <div class="status-bar">
                 <div class="status-indicator">
                     <span class="status-dot stopped" id="statusDot"></span>
                     <span id="statusText">Đang kiểm tra...</span>
                 </div>
-                <button class="btn-refresh" onclick="checkStatus()">🔄 Làm mới</button>
+                <button class="btn-refresh" onclick="checkStatus()">🔄 Làm mới trạng thái</button>
             </div>
         </div>
 
         <!-- Control Panel -->
         <div class="card">
-            <h2 style="margin-bottom: 16px;">Điều khiển Auto</h2>
+            <h2>Điều khiển Auto</h2>
             <div id="alertContainer"></div>
-            
+
             <div class="input-group">
-                <label>IP Address / Hostname</label>
-                <input type="text" id="serverIp" value="localhost" placeholder="localhost">
+                <label>IP / Hostname</label>
+                <input type="text" id="serverIp" value="localhost" placeholder="Ví dụ: 192.168.1.100">
             </div>
 
             <div class="input-group">
                 <label>Port</label>
-                <input type="number" id="serverPort" value="8080" placeholder="8080">
+                <input type="number" id="serverPort" value="8080">
             </div>
 
             <div class="input-group">
@@ -288,175 +191,168 @@
                 <input type="text" id="scenario" placeholder="Ví dụ: Giáp, Găng, Giày...">
             </div>
 
+            <div class="checkbox-group">
+                <input type="checkbox" id="searchB">
+                <label for="searchB">Tìm kiếm trong kho (searchB)</label>
+            </div>
+
             <div class="control-panel">
-                <button class="btn-start" onclick="startAuto()">▶️ Khởi động</button>
+                <button class="btn-start" onclick="startAuto()">▶️ Khởi động Auto</button>
                 <button class="btn-stop" onclick="stopAuto()">⏹️ Dừng Auto</button>
             </div>
         </div>
 
         <!-- File Manager -->
         <div class="card">
-            <h2 style="margin-bottom: 16px;">Quản lý File</h2>
-            <button class="btn-refresh" onclick="loadFiles()" style="margin-bottom: 16px;">
-                🔄 Tải danh sách file
-            </button>
-            <div class="file-list" id="fileList">
-                <p style="color: #6b7280; text-align: center; padding: 20px;">
-                    Nhấn "Tải danh sách file" để xem
-                </p>
+            <h2>Quản lý File Log</h2>
+            <button class="btn-refresh" onclick="loadFiles()">🔄 Tải danh sách file</button>
+            <div class="file-list" id="fileList" style="margin-top: 16px;">
+                <p style="text-align: center; color: #6b7280; padding: 40px;">Nhấn nút trên để tải danh sách file</p>
             </div>
         </div>
 
         <!-- Log Viewer -->
         <div class="card">
-            <h2 style="margin-bottom: 16px;">Xem Log</h2>
-            <div class="log-viewer" id="logViewer">
-                Chọn file để xem nội dung...
-            </div>
+            <h2>Xem nội dung Log</h2>
+            <div class="log-viewer" id="logViewer">Chọn một file từ danh sách để xem nội dung...</div>
         </div>
     </div>
 
     <script>
         function getBaseUrl() {
-            const ip = document.getElementById('serverIp').value;
-            const port = document.getElementById('serverPort').value;
+            const ip = document.getElementById('serverIp').value.trim() || 'localhost';
+            const port = document.getElementById('serverPort').value || '8080';
             return `http://${ip}:${port}`;
         }
 
         function showAlert(message, type = 'success') {
             const container = document.getElementById('alertContainer');
-            const alert = document.createElement('div');
-            alert.className = `alert alert-${type}`;
-            alert.textContent = message;
-            container.innerHTML = '';
-            container.appendChild(alert);
-            setTimeout(() => alert.remove(), 5000);
+            container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => container.innerHTML = '', 6000);
         }
 
         async function checkStatus() {
             try {
-                const response = await fetch(`${getBaseUrl()}/status`);
-                const data = await response.json();
-                
-                const statusDot = document.getElementById('statusDot');
-                const statusText = document.getElementById('statusText');
-                
+                const res = await fetch(`${getBaseUrl()}/status`);
+                const data = await res.json();
+                const dot = document.getElementById('statusDot');
+                const text = document.getElementById('statusText');
                 if (data.running) {
-                    statusDot.className = 'status-dot running';
-                    statusText.textContent = 'Auto đang chạy';
+                    dot.className = 'status-dot running';
+                    text.textContent = 'Auto đang chạy';
                 } else {
-                    statusDot.className = 'status-dot stopped';
-                    statusText.textContent = 'Auto đã dừng';
+                    dot.className = 'status-dot stopped';
+                    text.textContent = 'Auto đã dừng';
                 }
-            } catch (error) {
-                document.getElementById('statusText').textContent = 'Không thể kết nối';
-                showAlert('Lỗi kết nối: ' + error.message, 'error');
+            } catch (err) {
+                document.getElementById('statusText').textContent = 'Không thể kết nối server';
+                showAlert('Lỗi kết nối: ' + err.message, 'error');
             }
         }
 
         async function stopAuto() {
             try {
-                const response = await fetch(`${getBaseUrl()}/stop`, {
-                    method: 'POST'
-                });
-                const data = await response.json();
-                showAlert(data.message);
+                const res = await fetch(`${getBaseUrl()}/stop`, { method: 'POST' });
+                const data = await res.json();
+                showAlert(data.message || (data.success ? 'Đã dừng Auto' : 'Lỗi khi dừng'), data.success ? 'success' : 'error');
                 checkStatus();
-            } catch (error) {
-                showAlert('Lỗi: ' + error.message, 'error');
+            } catch (err) {
+                showAlert('Lỗi: ' + err.message, 'error');
             }
         }
 
         async function startAuto() {
             const type = document.getElementById('autoType').value;
-            const scenario = document.getElementById('scenario').value;
-            
+            const scenario = document.getElementById('scenario').value.trim();
+            const searchB = document.getElementById('searchB').checked;
+
+            const url = new URL(`${getBaseUrl()}/start/${encodeURIComponent(type)}`);
+            if (scenario) url.searchParams.append('scenario', scenario);
+            if (searchB) url.searchParams.append('searchB', 'true');
+
             try {
-                const url = new URL(`${getBaseUrl()}/start/${encodeURIComponent(type)}`);
-                if (scenario) {
-                    url.searchParams.append('scenario', scenario);
-                }
-                
-                const response = await fetch(url, { method: 'POST' });
-                const data = await response.json();
-                showAlert(data.message);
+                const res = await fetch(url, { method: 'POST' });
+                const data = await res.json();
+                let msg = data.message || 'Khởi động thành công';
+                if (scenario) msg += ` (scenario: ${scenario})`;
+                if (searchB) msg += ' - tìm trong kho';
+                showAlert(msg, 'success');
                 checkStatus();
-            } catch (error) {
-                showAlert('Lỗi: ' + error.message, 'error');
+            } catch (err) {
+                showAlert('Lỗi khởi động: ' + err.message, 'error');
             }
+        }
+
+        function formatSize(bytes) {
+            return (bytes / 1024).toFixed(2) + ' KB';
+        }
+
+        function formatDate(timestampMs) {
+            const d = new Date(timestampMs);
+            return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN');
         }
 
         async function loadFiles() {
             const fileList = document.getElementById('fileList');
-            fileList.innerHTML = '<p style="text-align: center;"><span class="loading"></span> Đang tải...</p>';
-            
+            fileList.innerHTML = '<p style="text-align: center; padding: 20px;"><span class="loading"></span> Đang tải...</p>';
+
             try {
-                const response = await fetch(`${getBaseUrl()}/files`);
-                const data = await response.json();
-                
-                if (data.success && data.files.length > 0) {
-                    fileList.innerHTML = '';
-                    data.files.forEach(file => {
-                        const item = document.createElement('div');
-                        item.className = 'file-item';
-                        item.innerHTML = `
-                            <div>
-                                <div class="file-name">📄 ${file.name}</div>
-                                <div class="file-size">${(file.size / 1024).toFixed(2)} KB</div>
-                            </div>
-                            <div class="file-actions">
-                                <button class="btn-small btn-view" onclick="viewFile('${file.name}')">
-                                    👁️ Xem
-                                </button>
-                                <button class="btn-small btn-delete" onclick="deleteFile('${file.name}')">
-                                    🗑️ Xóa
-                                </button>
-                            </div>
-                        `;
-                        fileList.appendChild(item);
-                    });
-                } else {
-                    fileList.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 20px;">Không có file nào</p>';
+                const res = await fetch(`${getBaseUrl()}/files`);
+                const data = await res.json();
+
+                if (!data.success || data.files.length === 0) {
+                    fileList.innerHTML = '<p style="text-align: center; color: #6b7280; padding: 40px;">Không có file nào</p>';
+                    return;
                 }
-            } catch (error) {
-                fileList.innerHTML = '<p style="color: #ef4444; text-align: center; padding: 20px;">Lỗi: ' + error.message + '</p>';
+
+                fileList.innerHTML = '';
+                data.files.forEach(file => {
+                    const div = document.createElement('div');
+                    div.className = 'file-item';
+                    div.innerHTML = `
+                        <div class="file-info">
+                            <div class="file-name">📄 ${file.name}</div>
+                            <div class="file-meta">${formatSize(file.size)} • ${formatDate(file.modified)}</div>
+                        </div>
+                        <div class="file-actions">
+                            <button class="btn-small btn-view" onclick="viewFile('${file.name.replace(/'/g, "\\'")}')">👁️ Xem</button>
+                            <button class="btn-small btn-delete" onclick="deleteFile('${file.name.replace(/'/g, "\\'")}')">🗑️ Xóa</button>
+                        </div>
+                    `;
+                    fileList.appendChild(div);
+                });
+            } catch (err) {
+                fileList.innerHTML = `<p style="text-align: center; color: #ef4444; padding: 20px;">Lỗi tải danh sách: ${err.message}</p>`;
             }
         }
 
         async function viewFile(filename) {
-            const logViewer = document.getElementById('logViewer');
-            logViewer.textContent = '⏳ Đang tải...';
-            
+            const viewer = document.getElementById('logViewer');
+            viewer.textContent = '⏳ Đang tải nội dung file...';
+
             try {
-                const response = await fetch(`${getBaseUrl()}/logs/${encodeURIComponent(filename)}`);
-                const data = await response.json();
-                
-                if (data.success) {
-                    logViewer.textContent = data.content || '(File trống)';
-                } else {
-                    logViewer.textContent = 'Lỗi: ' + data.error;
-                }
-            } catch (error) {
-                logViewer.textContent = 'Lỗi: ' + error.message;
+                const res = await fetch(`${getBaseUrl()}/logs/${encodeURIComponent(filename)}`);
+                const data = await res.json();
+                viewer.textContent = data.success ? (data.content || '(File trống)') : 'Lỗi: ' + data.error;
+            } catch (err) {
+                viewer.textContent = 'Lỗi tải file: ' + err.message;
             }
         }
 
         async function deleteFile(filename) {
-            if (!confirm(`Xác nhận xóa file: ${filename}?`)) return;
-            
+            if (!confirm(`Bạn có chắc chắn muốn xóa file "${filename}"?`)) return;
+
             try {
-                const response = await fetch(`${getBaseUrl()}/files/${encodeURIComponent(filename)}`, {
-                    method: 'DELETE'
-                });
-                const data = await response.json();
-                showAlert(data.message);
+                const res = await fetch(`${getBaseUrl()}/files/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                const data = await res.json();
+                showAlert(data.message || (data.success ? 'Đã xóa file' : 'Lỗi xóa file'), data.success ? 'success' : 'error');
                 loadFiles();
-            } catch (error) {
-                showAlert('Lỗi: ' + error.message, 'error');
+            } catch (err) {
+                showAlert('Lỗi xóa: ' + err.message, 'error');
             }
         }
 
-        // Auto refresh status every 5 seconds
+        // Tự động kiểm tra trạng thái mỗi 5 giây
         setInterval(checkStatus, 5000);
         checkStatus();
     </script>
